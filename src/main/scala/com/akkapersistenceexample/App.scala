@@ -1,9 +1,12 @@
 package com.akkapersistenceexample
 
-import akka.actor.{ Props, ActorSystem }
+import akka.actor.ActorSystem
 
 object App extends App {
 
   implicit val system = ActorSystem("example")
-  val persistentActor = system.actorOf(Props(classOf[AtLeastOneActor]))
+
+  val receiverActor   = system.actorOf(ReceiverActor.props)
+  val persistentActor = system.actorOf(AtLeastOneActor.props(receiverActor))
+
 }
